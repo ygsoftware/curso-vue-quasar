@@ -6,6 +6,7 @@
       :todos="todos"
       :meta="meta"
     ></example-component>
+    <q-btn to="user" label="Para User Page" />
   </q-page>
 </template>
 

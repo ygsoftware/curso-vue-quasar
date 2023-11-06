@@ -24,6 +24,11 @@
                 ]"
         />
       </div>
+      <password-input class="q-mt-md" outlined label="Senha" v-model="password" @change-icon="onChangeIcon">
+        <template v-slot:icon>
+          <q-icon name="password" />
+        </template>
+      </password-input>
       <div class="column">
         <q-checkbox v-model="term" label="Aceito os termos de uso"/>
         <q-btn label="Salvar" color="primary" @click="onSave"/>
@@ -35,9 +40,11 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
+import PasswordInput from 'components/PasswordInput.vue'
 
 export default defineComponent({
   name: 'UserPage',
+  components: { PasswordInput },
   setup () {
     const { notify } = useQuasar()
 
@@ -45,6 +52,7 @@ export default defineComponent({
     const bornDate = ref<string>('')
     const gender = ref<string>('')
     const term = ref<boolean>(false)
+    const password = ref<string>('')
 
     const onSave = () => {
       notify({
@@ -53,12 +61,28 @@ export default defineComponent({
       })
     }
 
+    const onChangeIcon = (value: boolean) => {
+      if (value) {
+        notify({
+          message: 'Ocultando senha',
+          type: 'info'
+        })
+      } else {
+        notify({
+          message: 'Mostrando senha',
+          type: 'info'
+        })
+      }
+    }
+
     return {
       name,
       bornDate,
       gender,
       term,
-      onSave
+      password,
+      onSave,
+      onChangeIcon
     }
   }
 })

@@ -40,11 +40,9 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { useQuasar } from 'quasar'
-import PasswordInput from 'components/PasswordInput.vue'
 
 export default defineComponent({
   name: 'UserPage',
-  components: { PasswordInput },
   setup () {
     const { notify } = useQuasar()
 

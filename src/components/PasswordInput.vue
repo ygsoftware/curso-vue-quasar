@@ -1,10 +1,15 @@
 <template>
-  <q-input :outlined="outlined" :label="label" v-model="value" :type="isPsw ? 'password' : 'text'">
+  <q-input :outlined="outlined"
+           :label="label"
+           v-model="value"
+           :type="isPsw ? 'password' : 'text'"
+           :rules="rules"
+  >
     <template v-slot:prepend>
       <slot name="icon"></slot>
     </template>
     <template v-slot:append>
-      <q-icon :name="isPsw ? 'visibility' : 'visibility_off'" @click="onChangePassword" />
+      <q-icon :name="isPsw ? 'visibility' : 'visibility_off'" @click="onChangePassword"/>
     </template>
   </q-input>
 </template>
@@ -19,7 +24,8 @@ export default defineComponent({
       required: true
     },
     label: String,
-    outlined: Boolean
+    outlined: Boolean,
+    rules: Array
   },
   emits: ['update:modelValue', 'changeIcon'],
   setup (props, { emit }) {

@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia'
-
-interface User {
-  name: string;
-  email: string;
-}
+import authApiService from 'src/services/auth.api.service'
+import { User } from 'src/models/user'
 
 interface AuthStoreState {
   user: User|false
@@ -16,7 +13,7 @@ export const useAuthStore = defineStore('auth', {
 
   getters: {
     name (state) {
-      return state.user ? state.user.name : ''
+      return state.user ? `${state.user.firstName} ${state.user.lastName}` : ''
     },
     email (state) {
       return state.user ? state.user.email : ''
@@ -24,15 +21,11 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    login (username: string, password: string): User|false {
+    async login (username: string, password: string): Promise<User|false> {
       this.user = false
-      console.log('Username', username)
-      console.log('Password', password)
-      if (username === 'admin@admin.com' && password === 'admin1234') {
-        this.user = {
-          name: 'Administrador',
-          email: 'admin@admin.com'
-        }
+      const response = await authApiService.login(username, password)
+      if (response.data && response.status === 200) {
+        this.user = response.data
       }
       return this.user
     },

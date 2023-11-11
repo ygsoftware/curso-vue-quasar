@@ -140,7 +140,7 @@ module.exports = configure(function (ctx) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
 
-      // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
+      // for the custom services worker ONLY (/src-pwa/custom-services-worker.[js|ts])
       // if using workbox in InjectManifest mode
       // chainWebpackCustomSW (/* chain */) {},
 

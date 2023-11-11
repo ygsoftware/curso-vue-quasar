@@ -9,7 +9,13 @@
           <q-separator />
           <q-card-section>
             <q-form greedy ref="loginForm" class="q-gutter-y-md">
-              <q-input v-model="email" label="Email" outlined :rules="['email']" />
+              <q-input v-model="username"
+                       label="Usuário"
+                       outlined
+                       :rules="[
+                         val => !!val || 'Usuário é obrigatório'
+                       ]"
+              />
               <password-input v-model="password" label="Senha" outlined
                               :rules="[
                                 val => !!val || 'Senha é obrigatória',
@@ -41,14 +47,14 @@ export default defineComponent({
 
     const loginForm = ref<QForm>()
 
-    const email = ref<string>('')
+    const username = ref<string>('')
     const password = ref<string>('')
 
     const onLogin = async () => {
       if (loginForm.value && !(await loginForm.value.validate(true))) {
         return
       }
-      const user = authStore.login(email.value, password.value)
+      const user = await authStore.login(username.value, password.value)
       if (!user) {
         notify({
           type: 'negative',
@@ -58,13 +64,13 @@ export default defineComponent({
       }
       notify({
         type: 'positive',
-        message: `${user.name} login realizado com sucesso`
+        message: `Usuário "${user.username}" acessou o sistema`
       })
     }
 
     return {
       loginForm,
-      email,
+      username,
       password,
       onLogin
     }
